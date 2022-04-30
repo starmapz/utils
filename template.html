@@ -1,0 +1,276 @@
+
+<!-- cat "result copy.html" result.html>results.html
+ -->
+<!-- reference:https://stackoverflow.com/questions/40035730/bootstrap-date-time-picker -->
+
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" /><!-- <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> --><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+ </script>
+
+ <!-- for datepicker -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+
+<!-- for datepicker end -->
+ 
+ <script type="text/javascript">
+     $(document).ready(function(){
+     // Hide displayed paragraphs
+     var select=1
+    //  $(".result").hide();
+
+     function generateDC()
+    {   
+        var projectname=$("#project-name").val();
+
+        var raffle_start_time = $('#datetimepicker1').data('DateTimePicker').date().unix()
+        var raffle_duration=$("#raffle-duration").val();
+        var raffle_end_time = raffle_start_time+3600*raffle_duration;
+        var submit_duration=$("#submit-duration").val();
+        var submit_end_time = raffle_end_time+3600*submit_duration;
+        var raffle_count=$("#rafflecount").val();
+        var DC_link=$("#dclink").val();
+        var TW_link=$("#twlink").val();
+        var mytext = `
+        ${projectname} Whitelist Raffle (:gift:A total of ${raffle_count} spots)
+
+        :round_pushpin:How To Enter
+        Enter the :gift:｜giveaways channel, react to the emoji ":tada: " to enter the raffle
+
+        :hourglass_flowing_sand:Duration
+        <t:${raffle_start_time}:F> - <t:${raffle_end_time}:F> (${raffle_duration} hr)
+
+        :purse:How to submit your wallet address (Raffle Winners only)
+        Please proceed to :tada:｜wl-winner-claims channel before <t:${submit_end_time}:F> and submit your wallet address by clicking on the [Claims] button associated with this project.
+
+        :warning:Things to note
+        :one:This raffle is limited to :bear:PhantaBear holders only
+        :two:This is not financial advice. Please do your own research, consider your own investment objective and risk tolerance level. You may also seek professional advices before making any decisions
+
+        ${projectname} 白單抽獎活動(:gift:共 ${raffle_count} 個)
+
+        :round_pushpin:參與方式
+        進入 :gift:｜giveaways 頻道，點擊":tada:"符號參加抽獎
+
+        :hourglass_flowing_sand:抽獎時間
+        <t:${raffle_start_time}:F> - <t:${raffle_end_time}:F> (${raffle_duration}小時) 
+
+        :purse:錢包地址提交方式
+        請得獎者於#<t:${submit_end_time}:F>#內進入  :tada:｜wl-winner-claims 頻道，點擊中獎項目對應之[Claims]按鈕進行錢包地址提交
+
+        :warning:請注意
+        :one:此次活動僅限:bear:PhantaBear持有者
+        :two:此公告僅供參考，不構成任何投資建議；在做任何投資決定前應先作風險評估，並在需要時諮詢專業意見.\n\n`;
+
+        if(TW_link.length>0){
+            mytext=mytext+`Twitter: ${TW_link}\n`
+        }
+
+        if(DC_link.length>0){
+            mytext=mytext+`Discord: ${DC_link}`
+        }
+
+        return mytext
+
+    }
+
+
+
+
+     $("#generate").click(function(){
+         var mytext="该模版尚未启用";
+        if($("#templatename").val()=='dc-raffle'){
+            mytext=generateDC()
+        }
+        $("#exampleFormControlTextarea1").text(mytext);
+     });
+
+     $("#copytext").click(function(){
+        copycontent=$("#exampleFormControlTextarea1").val();
+        navigator.clipboard.writeText(copycontent);
+
+        /* Alert the copied text */
+        alert("复制成功");
+     });
+
+
+     
+     $(function() {
+  $('#datetimepicker1').datetimepicker();
+  
+});
+      
+ 
+ });
+ 
+ </script>
+  <style>
+    body{
+        margin:10px;
+    }
+    .result{
+        border:1px black solid;
+        border-radius:10px;
+        padding:10px;
+        margin:10px;
+    }
+    .submission_no{
+        color:orange;
+        border:1px orange solid;
+        border-radius:10px;
+        padding:2px;
+        font-size: 20;
+
+        
+    }
+    .result{
+        white-space: pre-wrap;
+    }
+    .title{
+        display: inline-block;
+        padding:2px;
+        margin-right:20x;
+        border:1px #dddddd solid;
+        border-radius: 5px;
+        background: #eeeeee;
+        margin-top: 5px;
+    margin-right: 12px;
+  
+    display:inline-block; /*or display:block;*/
+}
+    .sitckyontop{
+        padding-left: 20px;
+        top:0%;
+        position: fixed;
+        background-color: white;
+        width:100%;
+    }
+ 
+    button{
+        background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 10px;
+    }
+
+    #datetimepicker1{
+        width: 250px;
+    }
+    .form-control{
+        width: 250px;
+        margin-bottom: 5px;
+
+    }
+    .bodycontent{
+
+        padding-bottom: 10px;
+        padding-left:5px;
+        display: inline;
+    }
+
+
+.leftdiv{
+
+  display: inline-block;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+  padding-right:50px;
+}
+
+
+.rightdiv{
+  display: inline-block;
+  padding: 1rem 1rem;
+  vertical-align: top;
+}
+#exampleFormControlTextarea1{
+    width:300px;
+}
+</style>
+
+<div class="notsitckyontop">
+    <h2>Phanta Bear文案生成工具</h2>
+
+</div>
+
+<div class="bodycontent">
+    <div class="leftdiv">
+        <label for="templatename">模版:</label>
+        <br>
+        
+        <select name="templatename" id="templatename" class="form-control">
+            <option value="dc-raffle">DC抽奖文案</option>
+            <option value="tw-raffle">推特抽奖文案</option>
+        
+        </select>
+
+
+        <div id="raffle template">
+
+
+            <label for="project-name">项目名称:</label>
+            <input type="text" class="form-control" id="project-name" name="project-name" placeholder ="项目名称">
+
+
+            <label for="templatename">开始时间(你的本地时间):</label>
+
+            <div class='input-group date' id='datetimepicker1'>
+                <input type='text' id='mydate' class="form-control" />
+                <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+
+
+            
+            <label for="templatename">抽奖时长(hr):</label>
+            <input type="text" class="form-control" id="raffle-duration" name="raffle-duration" placeholder ="抽奖时长（小时数）">
+
+
+            <label for="templatename">提交时长 (hr):</label>
+            <input type="text" class="form-control" id="submit-duration" name="submit-duration" placeholder ="提交时长（小时数）">
+
+        
+            <label for='rafflecount'>抽奖个数:</label>
+            <br>
+            <input type="text" class="form-control" id="rafflecount" name="rafflecount" placeholder =0>
+
+            <label for='dclink'>DC链接:</label>
+            <br>
+            <input type="text" class="form-control" id="dclink" name="dclink" placeholder ="DC链接（可留空）">
+
+            <label for='twlink'>推特链接:</label>
+            <br>
+            <input type="text" class="form-control" id="twlink" name="twlink" placeholder ="Twitter链接（可留空）">
+
+        </div>
+
+        <button class="hide-btn" id="generate">生成</button>
+        <!-- <button class="showall" id="step1tab">显示全部</button> -->
+    </div>
+
+    <div class="rightdiv">
+        <label for="exampleFormControlTextarea1">文案</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"></textarea>
+        <button class="hide-btn" id="copytext">复制文案</button>
+      </div>
+ </div>
+
+ 
+
+
+
+
+<!-- 1111 -->
+
